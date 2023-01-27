@@ -2,65 +2,73 @@ import java.util.Scanner;
 
 class Main {
   public static void main(String[] args) {
-    Scanner input=new Scanner(System.in);
-    int length;
-    int errors=3;
-    int x, y;
+    try (Scanner gameType = new Scanner(System.in)) {
+      System.out.println("Choose game mode (t: terminal, g: gui):");
+      String game = gameType.nextLine();
 
-    System.out.print("Inserisci la larghezza della griglia: ");
-
-    length=input.nextInt();
-    Board game=new Board(length);
-
-    game.init();
-
-    while(!game.isFinished()&&errors!=0){
-      game.print();
-      game.printList();
-
-      System.out.print("Selezione la riga (da 0 a "+(length-1)+"): ");
-      x=input.nextInt();
-      System.out.print("Selezione la colonna (da 0 a "+(length-1)+"): ");
-      y=input.nextInt();
-
-      boolean played=game.play(x, y);
-
-      if(played!=true){
-        errors--;
+      if(game.equals("t")){
+        terminalGame();
+      }
+      else if(game.equals("g")){
+        guiGame();
+      }
+      else{
+        System.out.println("No mode choosen, exiting");
       }
     }
+  }
 
-    if(errors==0){
-      System.out.println("Hai perso! La soluzione giusta è");
+  public static void terminalGame() {
+    try (Scanner input = new Scanner(System.in)) {
+      int length;
+      int errors = 3;
+      int x, y;
+
+      System.out.print("Enter the size of the grid: ");
+
+      length = input.nextInt();
+      Board game = new Board(length);
+
+      game.init();
+
+      while (!game.isFinished() && errors != 0) {
+        game.print();
+        game.printList();
+
+        System.out.print("Select the row (from 0 to" + (length - 1) + "): ");
+        x = input.nextInt();
+        System.out.print("Select the column (from 0 to" + (length - 1) + "): ");
+        y = input.nextInt();
+
+        boolean played = game.play(x, y);
+
+        if (played != true) {
+          errors--;
+        }
+      }
+
+      if (errors == 0) {
+        System.out.println("You lost! The right solution is");
+      } else {
+        System.out.println("You won!");
+      }
+
+      game.printRight();
     }
-    else{
-      System.out.println("Hai vinto!");
+  }
+
+  public static void guiGame(){
+    try (Scanner input = new Scanner(System.in)) {
+      int length;
+      int errors = 3;
+
+      System.out.print("Enter the size of the grid: ");
+
+      length = input.nextInt();
+      Board game = new Board(length);
+
+      game.init();
+      game.showGui(errors);
     }
-
-    game.printRight();
-
-    /*
-    Scanner input = new Scanner(System.in);
-
-    // Getting int input
-    System.out.print("Enter an integer: ");
-    int number = input.nextInt();
-    System.out.println("Integer entered " + number);
-
-    // Getting float input
-    System.out.print("Enter float: ");
-    float myFloat = input.nextFloat();
-    System.out.println("Float entered = " + myFloat);
-  
-    // Getting double input
-    System.out.print("Enter double: ");
-    double myDouble = input.nextDouble();
-    System.out.println("Double entered = " + myDouble);
-  
-    // Getting String input
-    System.out.print("Enter text: ");
-    String myString = input.next();
-    System.out.println("Text entered = " + myString);
-    */
   }
 }
