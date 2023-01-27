@@ -13,7 +13,7 @@ public class Board extends JFrame {
   private static JButton[] rowsButtons;
   JLabel lifesLabel = new JLabel();
   private static int err;
-  
+
   public Board() {
     l = 0;
     b_game = new boolean[l][l];
@@ -153,13 +153,12 @@ public class Board extends JFrame {
     System.out.println("");
   }
 
-  private static void showTile(int i, int j){
+  private static void showTile(int i, int j) {
     ImageIcon icon;
     boolean z = b_game[i][j];
     if (z == true) {
       icon = new ImageIcon("./data/true.png");
-    }
-    else{
+    } else {
       icon = new ImageIcon("./data/false.png");
     }
     gameButtons[i][j].setText("");
@@ -167,9 +166,9 @@ public class Board extends JFrame {
     gameButtons[i][j].setEnabled(false);
   }
 
-  private static void showAllTiles(){
-    for(int i=0; i<l; i++){
-      for(int j=0; j<l; j++){
+  private static void showAllTiles() {
+    for (int i = 0; i < l; i++) {
+      for (int j = 0; j < l; j++) {
         showTile(i, j);
       }
     }
@@ -186,19 +185,19 @@ public class Board extends JFrame {
     JPanel rows = new JPanel(new GridLayout(l, 1));
     colsButtons = new JButton[l];
     rowsButtons = new JButton[l];
-    for(int z=0; z<l; z++){
+    for (int z = 0; z < l; z++) {
       colsButtons[z] = new JButton();
       rowsButtons[z] = new JButton();
       /*
        * System.out.println("Lista di righe");
-    for (int i = 0; i < l; i++) {
-      System.out.println(toString());
-    }
-
-    System.out.println("Lista di colonne");
-    for (int i = 0; i < l; i++) {
-      System.out.println(list.reverse().toString());
-    }
+       * for (int i = 0; i < l; i++) {
+       * System.out.println(toString());
+       * }
+       * 
+       * System.out.println("Lista di colonne");
+       * for (int i = 0; i < l; i++) {
+       * System.out.println(list.reverse().toString());
+       * }
        */
       IntSList listCols = check(z, false);
       String col = listCols.reverse().toString();
@@ -220,34 +219,34 @@ public class Board extends JFrame {
         gameButtons[i][j] = new JButton(i + "-" + j);
         ImageIcon icon = new ImageIcon("./data/unknown.png");
         gameButtons[i][j].setIcon(icon);
-        gameButtons[i][j].addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                JButton b = (JButton) e.getSource();
-                String s = b.getText();
-                String[] parts = s.split("-");
-                int i = Integer.valueOf(parts[0]);
-                int j = Integer.valueOf(parts[1]);
-                if(play(i, j)==false){
-                  err--;
-                  lifesLabel.setText("Lifes: "+Integer.toString(err));
-                }
-                showTile(i, j);
-                if(isFinished()){
-                  JOptionPane.showMessageDialog(null, "You have won");
-                  showAllTiles();
-                }
-                if(err==0){
-                  JOptionPane.showMessageDialog(null, "You loose");
-                  showAllTiles();
-                }
+        gameButtons[i][j].addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+            JButton b = (JButton) e.getSource();
+            String s = b.getText();
+            String[] parts = s.split("-");
+            int i = Integer.valueOf(parts[0]);
+            int j = Integer.valueOf(parts[1]);
+            if (play(i, j) == false) {
+              err--;
+              lifesLabel.setText("Lifes: " + Integer.toString(err));
             }
+            showTile(i, j);
+            if (isFinished()) {
+              JOptionPane.showMessageDialog(null, "You have won");
+              showAllTiles();
+            }
+            if (err == 0) {
+              JOptionPane.showMessageDialog(null, "You loose");
+              showAllTiles();
+            }
+          }
         });
         grid.add(gameButtons[i][j]);
       }
     }
 
     JPanel lifes = new JPanel();
-    lifesLabel.setText("Lifes: "+Integer.toString(err));
+    lifesLabel.setText("Lifes: " + Integer.toString(err));
     lifes.add(lifesLabel);
 
     jFrame.getContentPane().add(rows, BorderLayout.WEST);

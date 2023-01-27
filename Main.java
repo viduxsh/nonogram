@@ -6,13 +6,11 @@ class Main {
       System.out.println("Choose game mode (t: terminal, g: gui):");
       String game = gameType.nextLine();
 
-      if(game.equals("t")){
+      if (game.equals("t")) {
         terminalGame();
-      }
-      else if(game.equals("g")){
+      } else if (game.equals("g")) {
         guiGame();
-      }
-      else{
+      } else {
         System.out.println("No mode choosen, exiting");
       }
     }
@@ -57,7 +55,7 @@ class Main {
     }
   }
 
-  public static void guiGame(){
+  public static void guiGame() {
     try (Scanner input = new Scanner(System.in)) {
       int length;
       int errors = 3;
